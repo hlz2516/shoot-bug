@@ -19,7 +19,7 @@ jsconfig.json中添加文件夹名简写配置：
       ]
 ```
 
-它表示src/components目录可以简写成com
+它表示src/components目录可以简写成com，但实际效果不生效；我们暂时能用的只有@表示src
 
 ## 路由分析
 

@@ -1,10 +1,10 @@
 <template>
   <div id="home">
     <div id="left">
-
+        审核员主页
     </div>
     <div id="right">
-
+        审核员帖子浏览区
     </div>
   </div>
 </template>

@@ -1,19 +1,21 @@
 <template>
   <div id="app">
     <nav-bar/>
-    <home/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
-import Home from './components/Home.vue';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
   name: 'App',
   components: {
-    NavBar,Home
-  }
+    NavBar
+  },
+  mounted() {
+    this.$router.push({path:'/'})
+  },
 }
 </script>
 
