@@ -3,4 +3,4 @@ import Mock from 'mockjs';
 import test from 'test.json';
 
 //第一个参数为你要发送的请求url，第二个参数为返回的模拟数据
-Mock.mock('/mock/test',{code:200,data:test})
+// Mock.mock('/mock/test',{code:200,data:test})

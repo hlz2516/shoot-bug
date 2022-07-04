@@ -2,9 +2,13 @@
   <div id="home">
     <div id="left">
         普通用户主页
+        <br>
+        <router-link to="/user/posts">帖子浏览区</router-link><br>
+        <router-link to="/user/post">帖子详情页</router-link><br>
+        <router-link to="/user/postedit">我要发帖</router-link>
     </div>
     <div id="right">
-        普通用户帖子浏览区
+        <router-view ></router-view>
     </div>
   </div>
 </template>

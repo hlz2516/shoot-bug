@@ -3,6 +3,9 @@ import VisitorPage from '@/pages/VisitorPage.vue';
 import UserPage from '@/pages/UserPage.vue';
 import AuditorPage from '@/pages/AuditorPage.vue';
 import RootPage from '@/pages/RootPage.vue';
+import PostDetailArea from '@/pages/PostDetailArea';
+import PostEditArea from '@/pages/PostEditArea';
+import PostsArea from '@/pages/PostsArea';
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;
@@ -30,17 +33,21 @@ export default new VueRouter({
             path:'/',
             component:VisitorPage,
             children:[
-                {path:'posts'},
-                {path:'post'}
+                {path:'posts',component:PostsArea},
+                {path:'post',component:PostDetailArea},
             ]
+        },
+        {
+            path:'/index',
+            redirect:'/'
         },
         {
             path:'/user',
             component:UserPage,
             children:[
-                {path:'posts'},
-                {path:'post'},
-                {path:'postedit'}
+                {path:'posts',component:PostsArea},
+                {path:'post',component:PostDetailArea},
+                {path:'postedit',component:PostEditArea}
             ]
         },
         {
