@@ -4,6 +4,26 @@ import UserPage from '@/pages/UserPage.vue';
 import AuditorPage from '@/pages/AuditorPage.vue';
 import RootPage from '@/pages/RootPage.vue';
 
+//保存原来的push|replace方法
+var originPush = VueRouter.prototype.push;
+var originReplace = VueRouter.prototype.replace;
+
+VueRouter.prototype.push = function (location,resolve,reject) {  
+    if (resolve && reject) {
+        originPush.call(this,location,resolve,reject)
+    }else{
+        originPush.call(this,location,()=>{},()=>{})
+    }
+}
+
+VueRouter.prototype.replace = function (location,resolve,reject) {  
+    if (resolve && reject) {
+        originReplace.call(this,location,resolve,reject)
+    }else{
+        originReplace.call(this,location,()=>{},()=>{})
+    }
+}
+
 export default new VueRouter({
     routes:[
         {
