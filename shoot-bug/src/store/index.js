@@ -7,17 +7,6 @@ export default {
   debug: true,
   state: {
     //这里写要共享的数据
-    PostDescPageSize:1
   },
   //这里写公共的对数据操作的方法
-  setPostDescPageSize(val){
-    if (this.debug) {
-      console.log('has set up PostDescPageSize:',val);
-    }
-    this.state.PostDescPageSize = val
-  },
-
-  getPostDescPageSize(){
-    return this.state.PostDescPageSize
-  }
 };

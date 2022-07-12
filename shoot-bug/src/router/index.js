@@ -6,6 +6,7 @@ import RootPage from "@/pages/RootPage.vue";
 import PostDetailArea from "@/pages/PostDetailArea";
 import PostEditArea from "@/pages/PostEditArea";
 import PostsArea from "@/pages/PostsArea";
+import Refresh from '@/pages/Refresh.vue';
 
 //保存原来的push|replace方法
 var originPush = VueRouter.prototype.push;
@@ -62,6 +63,7 @@ export default new VueRouter({
         },
         //打开详情页时必须传递post的id
         {
+          name: "post",
           path: "post/:id",
           component: PostDetailArea,
           meta: { keepAlive: false },
@@ -82,5 +84,10 @@ export default new VueRouter({
       component: RootPage,
       children: [{ path: "auditors" }],
     },
+    {
+      name: "refresh",
+      path: "/refresh",
+      component: Refresh
+    }
   ],
 });

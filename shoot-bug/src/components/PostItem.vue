@@ -58,7 +58,8 @@ export default {
         this.mouseIn =false;
     },
     seeDetail(){
-        this.$router.push({path:`/user/post/${this.postInfo.id}`,query:{title:this.postInfo.title}})
+        this.$router.push({path:`/user/post/${this.postInfo.id}`,
+        query:{title:this.postInfo.title}})
     }
   },
   props: ["postInfo"]

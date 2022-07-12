@@ -7,8 +7,6 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
-import axios from "axios";
-import store from "./store";
 
 export default {
   name: "App",
@@ -17,11 +15,11 @@ export default {
   },
   mounted() {
     this.$router.push({ path: "/" });
-    axios.get("/api/postdescs/pagesizes?size=10").then((resp) => {
-      if (resp.data.code === 200) {
-        store.setPostDescPageSize(resp.data.data);
-      }
-    });
+    // axios.get("/api/postdescs/pagesizes?size=10").then((resp) => {
+    //   if (resp.data.code === 200) {
+    //     store.setPostDescPageSize(resp.data.data);
+    //   }
+    // });
   },
   methods: {
 
