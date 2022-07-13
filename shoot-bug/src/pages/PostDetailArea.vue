@@ -159,7 +159,6 @@ export default {
         });
     }
     else {
-      console.log("from:",from.path);
       next();
     }
   },

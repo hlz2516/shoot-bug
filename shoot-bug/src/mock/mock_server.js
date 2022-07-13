@@ -46,8 +46,13 @@ Mock.mock("/api/floor?id=fjskhfksdhfushf12df1ds1&page=2", "get", () => {
 
 //接收到该post请求时，给对应的json文件添加数据
 Mock.mock("/api/floor/add?id=fjskhfksdhfushf12df1ds1", "post", (data) => {
-  console.log("post触发");
   let body = JSON.parse(data.body);
   floors2.push(body);
   return Result;
 });
+
+//用户的草稿post请求，这里假设和后端已经约定好文章的字段中published字段意为是否已发布
+Mock.mock("/api/article/save","post",(data)=>{return Result})
+
+//用户的发布文章的请求
+Mock.mock("/api/article/publish","post",()=>{return Result})
