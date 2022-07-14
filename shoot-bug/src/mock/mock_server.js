@@ -6,6 +6,8 @@ import postDescList2 from "./postDescList2.json";
 import floorsInfo from "./floorsInfo.json";
 import floors1 from "./floors1.json";
 import floors2 from "./floors2.json";
+import draftDescList1 from './draftDescList1.json';
+import draftDetail1 from './draftDetail1.json';
 
 let Result = {
   code: 200,
@@ -56,3 +58,16 @@ Mock.mock("/api/article/save","post",(data)=>{return Result})
 
 //用户的发布文章的请求
 Mock.mock("/api/article/publish","post",()=>{return Result})
+
+//请求草稿箱有多少页
+Mock.mock("/api/drafts/pagecount",'get',{ code: 200, data: 1 })
+
+Mock.mock("/api/draftdescs?page=1","get",()=>{
+  Result.data = draftDescList1;
+  return Result;
+})
+
+Mock.mock('/api/draft?id=djfh1d5f3d2d5f41','get',()=>{
+  Result.data = draftDetail1;
+  return Result;
+})

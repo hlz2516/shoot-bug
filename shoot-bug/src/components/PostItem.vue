@@ -1,8 +1,10 @@
 <template>
-  <div class="post-box" 
-    @mouseenter="appear" 
-    @mouseleave="disappear" 
-    @click="seeDetail">
+  <div
+    class="post-box"
+    @mouseenter="appear"
+    @mouseleave="disappear"
+    @click="seeDetail"
+  >
     <div v-show="mouseIn" class="mask"></div>
 
     <el-descriptions
@@ -34,6 +36,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -47,22 +50,45 @@ export default {
         "text-overflow": "ellipsis",
         "-webkit-box-orient": "vertical",
       },
-      mouseIn:false
+      mouseIn: false,
     };
   },
   methods: {
-    appear(){
-        this.mouseIn = true;
+    appear() {
+      this.mouseIn = true;
     },
-    disappear(){
-        this.mouseIn =false;
+    disappear() {
+      this.mouseIn = false;
     },
-    seeDetail(){
-        this.$router.push({path:`/user/post/${this.postInfo.id}`,
-        query:{title:this.postInfo.title}})
-    }
+    seeDetail() {
+      console.log(this.$route.path);
+      if (this.$route.path.indexOf("/user/posts") > -1) {
+        this.$router.push({
+          path: `/user/post/${this.postInfo.id}`,
+          query: { title: this.postInfo.title },
+        });
+      } else if (this.$route.path.indexOf("/user/drafts") > -1) {
+        //发送请求获取该draftdesc的详细信息
+        axios
+          .get(`/api/draft?id=${this.postInfo.id}`)
+          .then((resp) => {
+            if (resp.data.code === 200) {
+              return resp.data.data;
+            }
+            else return new Error('网络错误',resp.data.code)
+          })
+          .then((data) => {
+            //切换路由到内容编辑区，给内容编辑区赋初始值
+            this.$router.push({ name: "draft", params: { data } });
+            this.$bus.$emit('hideAside');
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },
   },
-  props: ["postInfo"]
+  props: ["postInfo"],
 };
 </script>
 
@@ -77,8 +103,8 @@ export default {
   position: relative;
 }
 
-.post-box:hover{
-    cursor: pointer;
+.post-box:hover {
+  cursor: pointer;
 }
 
 .tag-list {
@@ -89,13 +115,12 @@ export default {
   margin-right: 50px;
 }
 
-.mask{
-    width: 100%;
-    height: 100%;
-    background-color: rgba(230,230,250,0.3);
-    position: absolute;
-    left: 0;
-    top: 0;
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 230, 250, 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
 }
-
 </style>

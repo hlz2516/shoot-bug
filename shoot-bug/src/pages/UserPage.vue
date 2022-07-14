@@ -1,11 +1,11 @@
 <template>
   <div id="home">
-    <div id="left">
+    <div id="left" ref="left">
       普通用户主页
       <br />
       <button @click="toPosts">帖子浏览区</button><br />
-      <button @click="toPost">帖子详情页</button><br />
       <button @click="toPostEdit">我要发帖</button><br />
+      <button @click="toDrafts">草稿箱</button>
     </div>
     <div id="right">
       <MainArea></MainArea>
@@ -22,12 +22,24 @@ export default {
     toPosts() {
       this.$router.push("/user/posts");
     },
-    toPost() {
-      this.$router.push("/user/post/fjskhfksdhfushf12df1ds2");
-    },
     toPostEdit() {
       this.$router.push("/user/postedit");
+      //隐藏左侧侧边栏
+      this.hideAside();
+    },
+    toDrafts(){
+      this.$router.push("/user/drafts");
+    },
+    showAside(){
+      this.$refs.left.style.display = 'block'
+    },
+    hideAside(){
+      this.$refs.left.style.display = 'none'
     }
+  },
+  mounted() {
+    this.$bus.$on('showAside',this.showAside)
+    this.$bus.$on('hideAside',this.hideAside)
   },
 };
 </script>

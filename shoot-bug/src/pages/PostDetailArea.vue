@@ -19,7 +19,7 @@
       </el-pagination>
     </div>
     <div class="comment-cotainer">
-      <my-quill-editor ref="editor" />
+      <my-quill-editor ref="editor" v-model="commentContent" />
       <div class="func-container">
         <button @click="comment">发表</button>
       </div>
@@ -48,6 +48,7 @@ export default {
       floorList: [],
       limited: 1,
       currentPage: 1,
+      commentContent:''
     };
   },
   methods: {
@@ -88,14 +89,14 @@ export default {
     },
     comment() {
       //如果发表时内容为空则不发表
-      if (this.$refs.editor.formData.content == "") {
+      if (this.commentContent == "") {
         console.log("请填写内容后再发表");
         return;
       }
       //新数据
       let newInfo = {
         id: nanoid(),
-        content: this.$refs.editor.formData.content,
+        content: this.commentContent,
         time: time().format("YYYY-MM-DD HH:mm:ss"),
         "portrait-url": "",
         "nick-name": "新来的",
@@ -111,7 +112,7 @@ export default {
       .catch((err) => {
         console.error(err);
       });
-      this.$refs.editor.formData.content = "";
+      this.commentContent = "";
     },
   },
   mounted() {

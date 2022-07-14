@@ -46,6 +46,7 @@ export default {
         if (this.onCancel()) {
           this.remove = true;
         } else {
+          this.content = ''
           this.remove = false;
           this.isEditting = false;
         }

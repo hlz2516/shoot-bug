@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="content">
-      <my-quill-editor ref="contentEditor" />
+      <my-quill-editor ref="contentEditor" v-model="article.content" />
     </div>
     <div class="tags" ref="tagArea">
       <tag v-for="t in article.tagList" :key="t.content" class="tag" :tag="t" />
@@ -41,7 +41,8 @@ export default {
         id: "",
         title: "",
         content: "",
-        tagList: ["java", "C#", "javascript"],
+        tagList: [],
+        lastEditTime:""
       },
     };
   },
@@ -53,7 +54,7 @@ export default {
     onConfirm() {
       let val = this.$refs.lastTag.content;
       if (val != "") {
-        this.tagList.push(val);
+        this.article.tagList.push(val);
         this.$refs.lastTag.content = "";
       }
     },
@@ -90,6 +91,15 @@ export default {
     let container = this.$refs.contentEditor.$el.querySelector(".ql-container");
     container.style.height = "600px";
   },
+  beforeRouteEnter (to, from, next) {
+    console.log(to.params);
+    if(Object.keys(to.params).length > 0){
+      next((vm)=>{
+        vm.article = to.params.data
+      })
+    }
+    next();
+  }
 };
 </script>
 

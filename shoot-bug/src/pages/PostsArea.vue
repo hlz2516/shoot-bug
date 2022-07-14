@@ -1,6 +1,5 @@
 <template>
   <div class="posts-area">
-    <h2>这里是帖子浏览区</h2>
     <div class="inner">
       <PostItem v-for="post in postList" :key="post.id" :postInfo="post">
       </PostItem>
@@ -30,7 +29,14 @@ export default {
   components: { PostItem },
   methods: {
     handleCurrentChange(val) {
-      axios.get(`/api/postdescs?page=${val}`).then((resp) => {
+      let url = "";
+      if (this.$route.path.indexOf("/user/posts") > -1) {
+        url = `/api/postdescs?page=${val}`;
+      } else if (this.$route.path.indexOf("/user/drafts") > -1) {
+        url = `/api/draftdescs?page=${val}`;
+      }
+
+      axios.get(url).then((resp) => {
         if (resp.data.code === 200) {
           this.postList = resp.data.data;
         }
@@ -42,25 +48,28 @@ export default {
       });
     },
   },
-  created() {
-    // this.$bus.$on("setPosts", (value) => {
-    //   if (!value) {
-    //     this.postList = [];
-    //     return;
-    //   }
-    //   this.postList = value;
-    // });
-    axios.get("/api/postdescs?page=1").then((resp) => {
-      if (resp.data.code == 200) {
-        this.postList = resp.data.data;
-      }
-    });
-    console.log("postsarea created");
-  },
   beforeRouteEnter(to, from, next) {
-    if (from.path.indexOf("/index") > -1) {
+    // console.log('beforeRouteEnter',to,from);
+    if (
+      to.path.indexOf("/user/posts") > -1
+    ) {
       axios
         .get("/api/posts/pagecount")
+        .then((resp) => {
+          if (resp.data.code === 200) {
+            return resp.data.data;
+          }
+        })
+        .then((data) => {
+          next((vm) => {
+            vm.pageCount = data;
+          });
+        });
+    } else if (
+      to.path.indexOf("/user/drafts") > -1
+    ) {
+      axios
+        .get("/api/drafts/pagecount")
         .then((resp) => {
           if (resp.data.code === 200) {
             return resp.data.data;
@@ -74,7 +83,7 @@ export default {
     } else {
       next();
     }
-  },
+  }
   // activated() {
   //   console.log('postsarea activated')
   // },
@@ -84,7 +93,7 @@ export default {
   // destroyed() {
   //   console.log('postsarea destroyed')
   // },
-};
+}
 </script>
 
 <style>

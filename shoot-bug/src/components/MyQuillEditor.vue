@@ -10,6 +10,7 @@
       @blur="onEditorBlur($event)"
       @focus="onEditorFocus($event)"
       @ready="onEditorReady($event)"
+      @change="onEditorChange($event)"
     >
     </quill-editor>
   </div>
@@ -39,7 +40,7 @@ const toolbarOptions = [
 ];
 
 export default {
-  name: "addarticle",
+  name: "AddArticle",
   components: {
     quillEditor,
   },
@@ -61,6 +62,9 @@ export default {
         },
       },
     };
+  },
+  created() {
+    console.log("value", this.value);
   },
 
   mounted() {
@@ -89,8 +93,25 @@ export default {
     // 值发生变化
     onEditorChange(editor) {
       // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
-      // this.content = editor.html;
-      console.log(editor);
+      this.formData.content = editor.html;
+      this.$emit("input", this.formData.content);
+    },
+  },
+
+  watch:{
+    value:{
+      immediate:true,
+      handler(newVal,oldVal){
+        // console.log('get value',newVal,'-',oldVal);
+        this.formData.content = newVal
+      }
+    }
+  },
+
+  props: {
+    value: {
+      type: String,
+      default: "",
     },
   },
 };
